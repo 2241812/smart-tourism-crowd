@@ -1,0 +1,14 @@
+- .idx/dev.nix
+- .idx/mcp.json
+- next.config.ts
+- package.json
+- postcss.config.mjs
+- tsconfig.json
+- README.md
+- eslint.config.mjs
+- public/next.svg
+- public/vercel.svg
+- src/app/globals.css
+- src/app/layout.tsx
+- src/app/page.tsx
+- src/app/favicon.ico
