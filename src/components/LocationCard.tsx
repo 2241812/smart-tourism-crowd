@@ -1,41 +1,39 @@
-import { Location } from '@/types';
 import Image from 'next/image';
+import type { Location } from '@/types';
 
-const getCrowdStatus = (percentage: number) => {
-  if (percentage < 40) {
-    return { text: 'Hidden Gem', color: 'bg-green-500' };
-  }
-  if (percentage <= 75) {
-    return { text: 'Moderate', color: 'bg-yellow-500' };
-  }
-  return { text: 'Busy', color: 'bg-red-500' };
-};
+interface LocationCardProps {
+  location: Location;
+}
 
-const LocationCard = ({ location }: { location: Location }) => {
-  const crowdStatus = getCrowdStatus(location.crowdPercentage);
+export default function LocationCard({ location }: LocationCardProps) {
+  const { name, description, imageUrl, crowd_density } = location;
+
+  const getBadgeColor = () => {
+    if (crowd_density < 40) return 'bg-green-500';
+    if (crowd_density < 70) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
 
   return (
-    <div className="bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
-      <Image src={location.imageUrl} alt={location.name} className="w-full h-48 object-cover" width={500} height={300} />
+    <div className="bg-slate-800 rounded-lg overflow-hidden shadow-lg text-white">
+      <div className="relative aspect-video">
+        <Image 
+          src={imageUrl}
+          alt={name}
+          fill
+          className="object-cover"
+        />
+      </div>
       <div className="p-4">
-        <div className="flex justify-between items-start">
-          <h3 className="text-xl font-bold text-white mb-2">{location.name}</h3>
-          <span className={`px-2 py-1 text-sm font-semibold text-white rounded-full ${crowdStatus.color}`}>
-            {crowdStatus.text}
+        <h3 className="text-xl font-bold mb-2">{name}</h3>
+        <p className="text-gray-400 mb-4">{description}</p>
+        <div className="flex items-center">
+          <span className={`h-4 w-4 rounded-full ${getBadgeColor()} mr-2`}></span>
+          <span>
+            {crowd_density}% Crowd Density
           </span>
-        </div>
-        <p className="text-slate-400 text-sm mb-4 h-20 overflow-y-auto">{location.description}</p>
-        <div className="flex justify-between items-center">
-            <div className="text-sm text-slate-300">
-                Crowd: {location.crowdPercentage}%
-            </div>
-            <button className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
-                Navigate
-            </button>
         </div>
       </div>
     </div>
   );
-};
-
-export default LocationCard;
+}
