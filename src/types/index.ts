@@ -2,6 +2,8 @@ export interface Coordinates {
   lat: number;
   lng: number;
 }
+export type Category = 'park' | 'cafe' | 'museum' | 'library';
+
 
 export interface Location {
   id: number;
