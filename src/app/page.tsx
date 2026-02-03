@@ -1,6 +1,6 @@
 import LocationCard from '@/components/LocationCard';
 import MapView from '@/components/MapView';
-import { mockLocations } from '@/lib/mockData';
+import { locations } from '@/lib/mockData';
 
 export default function Home() {
   const locations = mockLocations;
